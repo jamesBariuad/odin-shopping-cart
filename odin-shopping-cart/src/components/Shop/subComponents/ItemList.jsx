@@ -19,7 +19,7 @@ const ItemList = ({ shopData }) => {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-2">
+    <div className="grid grid-cols-5 p-10 overflow-x-hidden">
       {shopData.map((item) => (
         <Link
           to={`item/${item.id}`}
@@ -27,14 +27,14 @@ const ItemList = ({ shopData }) => {
           id={item.id}
           onClick={handleItemClick}
         >
-          <div className="flex flex-col items-center h-full justify-center p-5 text-center gap-5 shadow-lg pointer-events-none">
+          <div className="flex flex-col items-center h-full justify-center p-5 text-center gap-5 shadow-lg pointer-events-none" >
             <img className="h-1/2" src={item.image} alt={item.title} />
             <div>
               <div className="font-semibold">{item.title}</div>
               <div>price: {item.price}</div>
               <div>category: {item.category}</div>
               <div>
-                rated {item.rating.rate} by {item.rating.count} users
+                 {item.rating.rate}/5 | {item.rating.count} sold
               </div>
             </div>
           </div>

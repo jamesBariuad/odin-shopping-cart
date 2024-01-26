@@ -54,7 +54,7 @@ const ItemPage = () => {
   //     }
   // }
   return (
-    <div className="w-1/2 mx-auto my-auto">
+    <div className="w-3/4 mx-auto my-auto h-4/5">
       <div className="grid gap-10 grid-cols-2 p-16 bg-slate-50 items-center ">
         <div className="place-self-center">
           <img
@@ -68,7 +68,7 @@ const ItemPage = () => {
           <div className="mb-5">
             <div className="text-4xl font-semibold">{itemData.title}</div>
             <div className="flex gap-5">
-              <div>rated {itemData.rating.rate}/5</div> |
+              <div>⭐{itemData.rating.rate}/5</div> |
               <div>{itemData.rating.count} ratings</div>
             </div>
           </div>

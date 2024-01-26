@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <div className="h-screen flex flex-col w-full">
+      <div className="h-screen flex flex-col w-screen overflow-x-hidden">
         <Nav />
         <Outlet/>
       </div>
