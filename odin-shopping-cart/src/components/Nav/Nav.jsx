@@ -14,7 +14,9 @@ const Nav = () => {
             <Link to="shop">
               <li>Shop</li>
             </Link>
-            <li className="self-center me-16">Cart</li>
+            <Link to="cart">
+              <li className="self-center me-16">Cart</li>
+            </Link>
           </div>
         </ul>
       </nav>
