@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 
 const ItemPage = () => {
   const { itemId } = useParams();
+  const [cartItems, setCartItems] = useOutletContext();
 
   const [itemData, setItemData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [itemCount, setItemCount] = useState(1);
+  const [itemQuantity, setItemQuantity] = useState(1);
 
   useEffect(() => {
     fetch(`https://fakestoreapi.com/products/${itemId}`)
@@ -22,37 +24,47 @@ const ItemPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleAddToCart = () => {
+    alert("added to cart success")
+    //check if present in cart
+    const isItemInCart = cartItems.some((item) => item.id === itemData.id);
+
+    if (isItemInCart) {
+      const updatedCartItems = cartItems.map((item) =>
+        itemData.id === item.id
+          ? { ...item, quantity: item.quantity + itemQuantity }
+          : item
+      );
+      setCartItems(updatedCartItems);
+    }else{
+      const itemToAdd = {
+        id: itemData.id,
+        title: itemData.title,
+        quantity: itemQuantity,
+        price: itemData.price
+      } 
+      setCartItems([...cartItems, itemToAdd])
+    }
+    //if present, increase the quantity,
+    //if not, append to list with the quantity
+
+  };
+
   if (loading) return <div>Loading item please wait..</div>;
   if (error) return <div>oh no there is an error:{error}</div>;
 
   const handlePlusMinusClick = (e) => {
-    console.log(e);
-
-    if (e.target.innerText === "-" && itemCount === 1) return;
+    if (e.target.innerText === "-" && itemQuantity === 1) return;
 
     if (e.target.innerText === "+") {
-      setItemCount(itemCount + 1);
+      setItemQuantity(itemQuantity + 1);
     }
 
     if (e.target.innerText === "-") {
-      setItemCount(itemCount - 1);
+      setItemQuantity(itemQuantity - 1);
     }
   };
 
-  console.log(itemCount);
-
-  //    {
-  //     "id": 3,
-  //     "title": "Mens Cotton Jacket",
-  //     "price": 55.99,
-  //     "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
-  //     "category": "men's clothing",
-  //     "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-  //     "rating": {
-  //         "rate": 4.7,
-  //         "count": 500
-  //     }
-  // }
   return (
     <div className="w-3/4 mx-auto my-auto h-4/5">
       <div className="grid gap-10 grid-cols-2 p-16 bg-slate-50 items-center ">
@@ -60,7 +72,7 @@ const ItemPage = () => {
           <img
             className="shadow-xl "
             src={itemData.image}
-            alt={itemData?.title}
+            alt={itemData.title}
           />
         </div>
 
@@ -82,7 +94,7 @@ const ItemPage = () => {
             >
               -
             </button>
-            <div> quantity: {itemCount}</div>
+            <div> quantity: {itemQuantity}</div>
             <button
               className="bg-slate-200 w-10"
               onClick={handlePlusMinusClick}
@@ -91,7 +103,10 @@ const ItemPage = () => {
             </button>
           </div>
 
-          <button className="fw-bold text-2xl bg-black text-white mx-16 mt-5">
+          <button
+            className="fw-bold text-2xl bg-black text-white mx-16 mt-5"
+            onClick={handleAddToCart}
+          >
             Add to Cart
           </button>
         </div>

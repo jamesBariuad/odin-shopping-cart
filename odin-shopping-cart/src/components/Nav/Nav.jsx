@@ -1,7 +1,13 @@
 import logo from "../../assets/fakestore logo.png";
-import { Link } from "react-router-dom";
+import { Link, } from "react-router-dom";
 
-const Nav = () => {
+const Nav = ({ cartItems }) => {
+  const quantityInCart = () => {
+    total = 0;
+    cartItems.map((item) => (total += item.quantity));
+    return total;
+  };
+
   return (
     <>
       <nav>
@@ -15,7 +21,10 @@ const Nav = () => {
               <li>Shop</li>
             </Link>
             <Link to="cart">
-              <li className="self-center me-16">Cart</li>
+              <li className="self-center me-16">
+                Cart 
+                {/* {cartItems.length!==0 && <sup>{quantityInCart}</sup>} */}
+              </li>
             </Link>
           </div>
         </ul>
