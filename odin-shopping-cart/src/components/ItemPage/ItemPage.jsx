@@ -25,7 +25,7 @@ const ItemPage = () => {
   }, []);
 
   const handleAddToCart = () => {
-    alert("added to cart success")
+    alert("added to cart success");
     //check if present in cart
     const isItemInCart = cartItems.some((item) => item.id === itemData.id);
 
@@ -36,21 +36,19 @@ const ItemPage = () => {
           : item
       );
       setCartItems(updatedCartItems);
-    }else{
+    } else {
       const itemToAdd = {
         id: itemData.id,
         title: itemData.title,
         quantity: itemQuantity,
-        price: itemData.price
-      } 
-      setCartItems([...cartItems, itemToAdd])
+        price: itemData.price,
+        image: itemData.image,
+      };
+      setCartItems([...cartItems, itemToAdd]);
     }
-    //if present, increase the quantity,
-    //if not, append to list with the quantity
-
   };
 
-  if (loading) return <div>Loading item please wait..</div>;
+  if (loading) return <div>Loading item, please wait..</div>;
   if (error) return <div>oh no there is an error:{error}</div>;
 
   const handlePlusMinusClick = (e) => {

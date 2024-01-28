@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <div className="h-screen flex flex-col w-screen overflow-x-hidden">
-        <Nav />
+        <Nav cartItems={cartItems} />
         <Outlet context={[cartItems, setCartItems]}/>
       </div>
     </>
